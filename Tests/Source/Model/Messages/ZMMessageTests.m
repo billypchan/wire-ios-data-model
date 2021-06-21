@@ -203,21 +203,22 @@ NSUInteger const ZMClientMessageByteSizeExternalThreshold = 128000;
     XCTAssertEqual(message.deliveryState, ZMDeliveryStateDelivered);
 }
 
-//- (void)testThatItResetsTheExpirationDateWhenResending
-//{
-//    // given
-//    ZMTextMessage *message = [[ZMTextMessage alloc] initWithNonce:NSUUID.createUUID managedObjectContext:self.uiMOC];
-//    [message expire];
-//
-//    NSDate *expectedDate = [NSDate dateWithTimeIntervalSinceNow:ZMTransportRequestDefaultExpirationInterval];
-//
-//    // when
-//    [message resend];
-//
-//    // then
-//    XCTAssertNotNil(message.expirationDate);
-//    XCTAssertEqualWithAccuracy([message.expirationDate timeIntervalSinceNow], [expectedDate timeIntervalSinceNow], 0.001);
-//}
+- (void)testThatItResetsTheExpirationDateWhenResending
+{
+    // given
+    ZMTextMessage *message = [[ZMTextMessage alloc] initWithNonce:NSUUID.createUUID managedObjectContext:self.uiMOC];
+    [message expire];
+
+    NSDate *expectedDate = [NSDate dateWithTimeIntervalSinceNow:ZMTransportRequestDefaultExpirationInterval];
+
+    // when
+    [message resend];
+
+    // then
+    XCTAssertNotNil(message.expirationDate);
+    ///TODO: (([message.expirationDate timeIntervalSinceNow]) equal to ([expectedDate timeIntervalSinceNow]) +/- (0.001)) failed: ("29.9998550415") is not equal to ("59.9998049736") +/- ("0.001")
+    XCTAssertEqualWithAccuracy([message.expirationDate timeIntervalSinceNow], [expectedDate timeIntervalSinceNow], 0.001);
+}
 
 
 - (void)testThatItResetsTheExpiredStateWhenResending
