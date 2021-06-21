@@ -312,6 +312,8 @@
 		A923D77E239DB87700F47B85 /* ZMConversationTests+SecurityLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923D77D239DB87700F47B85 /* ZMConversationTests+SecurityLevel.swift */; };
 		A927F52723A029250058D744 /* ParticipantRoleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A927F52623A029250058D744 /* ParticipantRoleTests.swift */; };
 		A94166EA2680BEB2001F4E37 /* ZMConversationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94166E92680BEB2001F4E37 /* ZMConversationTests.swift */; };
+		A94166EF2680C830001F4E37 /* AssetCollectionBatchedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90D99A61E02E22400034070 /* AssetCollectionBatchedTests.swift */; };
+		A94166F22680C856001F4E37 /* AssetColletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C8770A1E015AAF00792613 /* AssetColletionTests.swift */; };
 		A943BBE825B5A59D003D66BA /* ConversationLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943BBE725B5A59D003D66BA /* ConversationLike.swift */; };
 		A949418F23E1DB79001B0373 /* ZMConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418E23E1DB78001B0373 /* ZMConnection.swift */; };
 		A9536FD323ACD23100CFD528 /* ConversationTests+gapsAndWindows.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9536FD223ACD23100CFD528 /* ConversationTests+gapsAndWindows.swift */; };
@@ -3344,6 +3346,7 @@
 				1689FD462194A63E00A656E2 /* ZMClientMessageTests+Editing.swift in Sources */,
 				F19550392040628400338E91 /* ZMUpdateEvent+Helper.swift in Sources */,
 				F9B71F9C1CB2BF18001DB03F /* ZMCallStateTests.swift in Sources */,
+				A94166F22680C856001F4E37 /* AssetColletionTests.swift in Sources */,
 				0630E4BF257FA2BD00C75BFB /* TransferAppLockKeychainTests.swift in Sources */,
 				BF491CEB1F063F480055EE44 /* AccountManagerTests.swift in Sources */,
 				544E8C0F1E2F69EB00F9B8B8 /* ZMOTRMessage+SecurityDegradationTests.swift in Sources */,
@@ -3554,6 +3557,7 @@
 				F11F3E8B1FA32AA0007B6D3D /* InvalidClientsRemovalTests.swift in Sources */,
 				060D194F2462A9EC00623376 /* ZMMessageTests+GenericMessage.swift in Sources */,
 				EE09EEB1255959F000919A6B /* ZMUserTests+AnalyticsIdentifier.swift in Sources */,
+				A94166EF2680C830001F4E37 /* AssetCollectionBatchedTests.swift in Sources */,
 				BFFBFD951D59E49D0079773E /* ZMClientMessageTests+Deletion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
