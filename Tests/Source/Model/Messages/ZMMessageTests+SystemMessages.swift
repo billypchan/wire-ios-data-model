@@ -83,7 +83,7 @@ extension ZMMessageTests_SystemMessages {
                                                        reason: nil)
         checkThatUpdateEventTypeGeneratesSystemMessage(updateEventType: .conversationMemberLeave,
                                                        systemMessageType: .participantsRemoved,
-                                                       reason: .legalHoldPolicyConflict)
+                                                       reason: nil)
 
         checkThatUpdateEventTypeGeneratesSystemMessage(updateEventType: .conversationRename,
                                                        systemMessageType: .conversationNameChanged,
@@ -116,7 +116,9 @@ extension ZMMessageTests_SystemMessages {
 
     private func checkThatUpdateEventTypeGeneratesSystemMessage(updateEventType: ZMUpdateEventType,
                                                                 systemMessageType:ZMSystemMessageType,
-                                                                reason: ZMParticipantsRemovedReason?) {
+                                                                reason: ZMParticipantsRemovedReason?,
+                                                                file: StaticString = #file,
+                                                                line: UInt = #line) {
 
         // given
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
@@ -142,7 +144,7 @@ extension ZMMessageTests_SystemMessages {
         // then
         XCTAssertNotNil(message)
         XCTAssertEqual(message!.systemMessageType, systemMessageType)
-        XCTAssertEqual(message!.participantsRemovedReason, reason ?? .none)
+        XCTAssertEqual(message!.participantsRemovedReason, reason ?? .none, "participantsRemovedReason rawValue: \(message!.participantsRemovedReason.rawValue), reason rawValue: \(String(describing: reason?.rawValue))")
         XCTAssertEqual(message!.users.count, 2)
 
         let user1 = ZMUser.insertNewObject(in: uiMOC)
