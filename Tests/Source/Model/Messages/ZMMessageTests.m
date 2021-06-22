@@ -350,16 +350,6 @@ NSUInteger const ZMClientMessageByteSizeExternalThreshold = 128000;
     XCTAssertEqualObjects(message.keysTrackedForLocalModifications, expected);
 }
 
-//- (void)testThatSpecialKeysAreNotPartOfTheLocallyModifiedKeysForClientMessages
-//{
-//    // when
-//    ZMClientMessage *message = [[ZMClientMessage alloc] initWithNonce:NSUUID.createUUID managedObjectContext:self.uiMOC];
-//    
-//    // then
-//    NSSet *keysThatShouldBeTracked = [NSSet setWithArray:@[@"dataSet", @"linkPreviewState"]];
-//    XCTAssertEqualObjects(message.keysTrackedForLocalModifications, keysThatShouldBeTracked);
-//}
-
 - (void)testThat_doesEventGenerateMessage_returnsTrueForAllKnownTypes
 {
     NSArray *validTypes = @[
@@ -1362,45 +1352,45 @@ NSUInteger const ZMClientMessageByteSizeExternalThreshold = 128000;
 
 @implementation ZMMessageTests (Deletion)
 
-//- (void)testThatRepliesAreRemoved
-//{
-//    // given
-//    ZMConversation *conversation = [ZMConversation insertNewObjectInManagedObjectContext:self.uiMOC];
-//    conversation.remoteIdentifier = [NSUUID createUUID];
-//
-//    ZMClientMessage *message1 = (ZMClientMessage *)[conversation appendMessageWithText:@"Test"];
-//    ZMClientMessage *message2 = (ZMClientMessage *)[conversation appendText:@"Test 2" mentions:@[] replyingToMessage:message1 fetchLinkPreview:NO nonce:NSUUID.createUUID];
-//    XCTAssertEqualObjects(message2.quote, message1);
-//    XCTAssertFalse(message1.replies.isEmpty);
-//
-//    // when
-//    [message1 removeMessageClearingSender:YES];
-//    [self.uiMOC saveOrRollback];
-//
-//    // then
-//    XCTAssertTrue(message1.replies.isEmpty);
-//    XCTAssertNil(message2.quote);
-//}
+- (void)testThatRepliesAreRemoved
+{
+    // given
+    ZMConversation *conversation = [ZMConversation insertNewObjectInManagedObjectContext:self.uiMOC];
+    conversation.remoteIdentifier = [NSUUID createUUID];
+    
+    ZMClientMessage *message1 = (ZMClientMessage *)[conversation appendMessageWithText:@"Test"];
+    ZMClientMessage *message2 = (ZMClientMessage *)[conversation appendText:@"Test 2" mentions:@[] replyingToMessage:message1 fetchLinkPreview:NO nonce:NSUUID.createUUID];
+    XCTAssertEqualObjects(message2.quote, message1);
+    XCTAssertFalse(message1.replies.isEmpty);
+    
+    // when
+    [message1 removeMessageClearingSender:YES];
+    [self.uiMOC saveOrRollback];
+    
+    // then
+    XCTAssertTrue(message1.replies.isEmpty);
+    XCTAssertNil(message2.quote);
+}
 
-//- (void)testThatQuotesAreRemoved
-//{
-//    // given
-//    ZMConversation *conversation = [ZMConversation insertNewObjectInManagedObjectContext:self.uiMOC];
-//    conversation.remoteIdentifier = [NSUUID createUUID];
-//    
-//    ZMClientMessage *message1 = (ZMClientMessage *)[conversation appendMessageWithText:@"Test"];
-//    ZMClientMessage *message2 = (ZMClientMessage *)[conversation appendText:@"Test 2" mentions:@[] replyingToMessage:message1 fetchLinkPreview:NO nonce:NSUUID.createUUID];
-//    XCTAssertEqualObjects(message2.quote, message1);
-//    XCTAssertFalse(message1.replies.isEmpty);
-//    
-//    // when
-//    [message2 removeMessageClearingSender:YES];
-//    [self.uiMOC saveOrRollback];
-//    
-//    // then
-//    XCTAssertTrue(message1.replies.isEmpty);
-//    XCTAssertNil(message2.quote);
-//}
+- (void)testThatQuotesAreRemoved
+{
+    // given
+    ZMConversation *conversation = [ZMConversation insertNewObjectInManagedObjectContext:self.uiMOC];
+    conversation.remoteIdentifier = [NSUUID createUUID];
+    
+    ZMClientMessage *message1 = (ZMClientMessage *)[conversation appendMessageWithText:@"Test"];
+    ZMClientMessage *message2 = (ZMClientMessage *)[conversation appendText:@"Test 2" mentions:@[] replyingToMessage:message1 fetchLinkPreview:NO nonce:NSUUID.createUUID];
+    XCTAssertEqualObjects(message2.quote, message1);
+    XCTAssertFalse(message1.replies.isEmpty);
+    
+    // when
+    [message2 removeMessageClearingSender:YES];
+    [self.uiMOC saveOrRollback];
+    
+    // then
+    XCTAssertTrue(message1.replies.isEmpty);
+    XCTAssertNil(message2.quote);
+}
 
 
 @end
