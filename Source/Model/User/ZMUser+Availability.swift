@@ -23,7 +23,7 @@ import Foundation
 public enum AvailabilityKind : Int, CaseIterable {
     case none, available, busy, away
     
-    public init(proto: WireProtos.Availability) {
+    public init(proto : WireProtos.Availability) {
         ///TODO: change ZMAvailabilityType to NS_CLOSED_ENUM
         switch proto.type {
         case .none:
