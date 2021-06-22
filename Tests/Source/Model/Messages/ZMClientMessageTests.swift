@@ -20,6 +20,79 @@ import XCTest
 @testable import WireDataModel
 
 final class ClientMessageTests: BaseZMClientMessageTests {
+    func testThatItStoresClientAsMissing() {
+        let client = createSelfClient()
+        let message = createClientTextMessage()
+        message?.missesRecipient(client)
+
+        XCTAssertEqual(message?.missingRecipients, Set<AnyHashable>([client]))
+    }
+    
+    func testThatItRemovesMissingClient() {
+        let client = createSelfClient()
+        let message = createClientTextMessage()
+        message?.missesRecipient(client)
+
+        XCTAssertEqual(message?.missingRecipients, Set<AnyHashable>([client]))
+
+        message?.doesNotMissRecipient(client)
+
+        XCTAssertEqual(message?.missingRecipients.count, 0)
+    }
+    
+    func testThatClientMessageIsMarkedAsDelivered() {
+        let message = createClientTextMessage()
+        message?.setExpirationDate()
+
+        message?.markAsSent()
+        XCTAssertTrue(((message?.delivered) != nil))
+        XCTAssertFalse(((message?.isExpired) != nil))
+    }
+    
+    func testThatResendingClientMessageResetsExpirationDate() {
+        let message = createClientTextMessage()
+
+        message?.resend()
+        XCTAssertNotNil(message?.expirationDate)
+    }
+    
+    func testThatItSetsLocallyModifiedKeysWhenLinkPreviewStateIsSet() {
+        let states = [ZMLinkPreviewStateWaitingToBeProcessed, ZMLinkPreviewStateDownloaded, ZMLinkPreviewStateProcessed, ZMLinkPreviewStateUploaded, ZMLinkPreviewStateDone]
+
+        for i in 0..<(MemoryLayout.size(ofValue: states) / MemoryLayout<ZMLinkPreviewState>.size) {
+            assertThatItSetsLocallyModifiedKeys(whenLinkPreviewStateIsSet: states[i], shouldSet: states[i] != Int16(ZMLinkPreviewStateDone))
+        }
+    }
+    
+    func assertThatItSetsLocallyModifiedKeys(whenLinkPreviewStateIsSet state: ZMLinkPreviewState, shouldSet: Bool) {
+        // given
+        let message = createClientTextMessage()
+        XCTAssertFalse(((message?.keysThatHaveLocalModifications.contains(ZMClientMessage.linkPreviewStateKey)) != nil))
+
+        // when
+        message?.linkPreviewState = state
+
+        // then
+        XCTAssertEqual(message?.keysThatHaveLocalModifications.contains(ZMClientMessage.linkPreviewStateKey), shouldSet)
+    }
+    
+    func testThatAInsertedClientMessageHasADefaultLinkPreviewStateDone() {
+        let message = ZMClientMessage(nonce: NSUUID.createUUID, managedObjectContext: uiMOC)
+        XCTAssertEqual(message.linkPreviewState, ZMLinkPreviewStateDone)
+    }
+    
+    func testThatAAppendedClientMessageHasLinkPreviewStateWaitingToBeProcessed() {
+        let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        let message = conversation?.appendMessage(withText: name) as? ZMClientMessage
+        XCTAssertEqual(message?.linkPreviewState, ZMLinkPreviewStateWaitingToBeProcessed)
+    }
+    
+    func testThatAAppendedClientMessageWithFlagToNotFetchPreviewSetHasLinkPreviewStateDone() {
+        let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        let message = conversation?.appendMessage(withText: name, fetchLinkPreview: false) as? ZMClientMessage
+        XCTAssertEqual(message?.linkPreviewState, ZMLinkPreviewStateDone)
+    }
+    
     func testThatItDoesNotCreateTextMessagesFromUpdateEventIfThereIsAlreadyAClientMessageWithTheSameNonce() {
         // given
         let nonce = UUID.create()
@@ -569,7 +642,7 @@ extension ClientMessageTests {
     func testThatItIgnoresUpdates_OnAnAlreadyExistingClientMessageWhichContainLinkPreviewUpdateButModifiedText() {
         // given
         let initialText = "initial text"
-        let modifiedText = "modified text"
+        _ = "modified text"
         
         let nonce = UUID.create()
         let conversation = ZMConversation.insertNewObject(in: self.uiMOC)
