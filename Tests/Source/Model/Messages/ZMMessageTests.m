@@ -37,6 +37,19 @@ NSString * const IsExpiredKey = @"isExpired";
 NSString * const ReactionsKey = @"reactions";
 NSUInteger const ZMClientMessageByteSizeExternalThreshold = 128000;
 
+//MARK: - for stubbing non-objc ZMUpdateEvent.messageNonce
+@interface ZMUpdateEvent (WireDataModelTesting)
+- (NSUUID *)messageNonce;
+@end
+
+@implementation ZMUpdateEvent (WireDataModelTesting)
+
+- (NSUUID *)messageNonce
+{
+    return nil;
+}
+@end
+
 @implementation BaseZMMessageTests : ModelObjectsTests
 
 - (void)setUp
@@ -1579,4 +1592,3 @@ NSUInteger const ZMClientMessageByteSizeExternalThreshold = 128000;
 }
 
 @end
-
