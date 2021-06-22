@@ -838,13 +838,7 @@ NSString * const ZMMessageDecryptionErrorCodeKey = @"decryptionErrorCode";
     if (![usersSet isEqual:[NSSet setWithObject:message.sender]]) {
         [usersSet removeObject:message.sender];
     }
-    
-    ///Workaround to solve Swift treat OCMocked ZMUpdateEvent as a ZMUpdateEvent issue.
-    if (![[updateEvent description] isEqualToString:@"OCMockObject(WireTransport.ZMUpdateEvent)"]) {
-        message.participantsRemovedReason = [self updateEventParticipantsRemovedReason:updateEvent];
-    } else {
-        message.participantsRemovedReason = ZMParticipantsRemovedReasonNone;
-    }
+    message.participantsRemovedReason = [self updateEventParticipantsRemovedReason:updateEvent];
     message.users = usersSet;
     message.text = messageText != nil ? messageText : name;
     

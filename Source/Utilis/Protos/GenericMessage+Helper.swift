@@ -358,7 +358,7 @@ extension Text {
     public init(content: String, mentions: [Mention] = [], linkPreviews: [LinkMetadata] = [], replyingTo: ZMOTRMessage? = nil) {
         self = Text.with {
             $0.content = content
-            $0.mentions = mentions.compactMap { WireProtos.Mention.createMention($0) }
+            $0.mentions = mentions.compactMap { WireProtos.Mention($0) }
             $0.linkPreview = linkPreviews.map { WireProtos.LinkPreview($0) }
             
             if let quotedMessage = replyingTo,
@@ -402,8 +402,8 @@ extension Text {
 // MARK: - Reaction
 
 extension WireProtos.Reaction {
-    public static func createReaction(emoji: String, messageID: UUID) -> WireProtos.Reaction {
-        return WireProtos.Reaction.with({
+    public init(emoji: String, messageID: UUID) {
+        self = WireProtos.Reaction.with({
             $0.emoji = emoji
             $0.messageID = messageID.transportString()
         })
@@ -513,13 +513,12 @@ extension External {
 }
 
 // MARK: - Mention
+
 public extension WireProtos.Mention {
-    static func createMention(_ mention: WireDataModel.Mention) -> WireProtos.Mention? {
-//public enum MentionFactory {
-//    public static func createMention(mention: WireDataModel.Mention) -> WireProtos.Mention? {
+    init?(_ mention: WireDataModel.Mention) {
         guard let userID = (mention.user as? ZMUser)?.remoteIdentifier.transportString() else { return nil }
         
-        return WireProtos.Mention.with {
+        self = WireProtos.Mention.with {
             $0.start = Int32(mention.range.location)
             $0.length = Int32(mention.range.length)
             $0.userID = userID
@@ -529,9 +528,9 @@ public extension WireProtos.Mention {
 
 // MARK: - Availability
 
-public enum AvailabilityFactory {
-    public static func createAvailability(availability: AvailabilityKind) -> WireProtos.Availability {
-        return WireProtos.Availability.with {
+extension WireProtos.Availability {
+    public init(_ availability: AvailabilityKind) {
+        self = WireProtos.Availability.with {
             switch availability {
             case .none:
                 $0.type = .none
