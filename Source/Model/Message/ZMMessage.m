@@ -842,6 +842,8 @@ NSString * const ZMMessageDecryptionErrorCodeKey = @"decryptionErrorCode";
     ///Workaround to solve Swift treat OCMocked ZMUpdateEvent as a ZMUpdateEvent issue.
     if (![updateEvent isKindOfClass:[ZMUpdateEvent class]]) {
         message.participantsRemovedReason = [self updateEventParticipantsRemovedReason:updateEvent];
+    } else {
+        message.participantsRemovedReason = ZMParticipantsRemovedReasonNone;
     }
     message.users = usersSet;
     message.text = messageText != nil ? messageText : name;
