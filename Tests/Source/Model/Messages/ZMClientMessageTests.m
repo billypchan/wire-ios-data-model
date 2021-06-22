@@ -31,7 +31,7 @@
 
 @interface ZMClientMessageTests : BaseZMMessageTests
 @end
-
+///TODO: ZMClientMessage to swift
 @implementation ZMClientMessageTests
 - (void)testThatItStoresClientAsMissing
 {
