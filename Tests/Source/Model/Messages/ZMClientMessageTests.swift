@@ -45,8 +45,8 @@ final class ClientMessageTests: BaseZMClientMessageTests {
         message?.setExpirationDate()
 
         message?.markAsSent()
-        XCTAssertTrue(((message?.delivered) != nil))
-        XCTAssertFalse(((message?.isExpired) != nil))
+        XCTAssert(message?.delivered == true)
+        XCTAssert(message?.isExpired == false)
     }
     
     func testThatResendingClientMessageResetsExpirationDate() {
@@ -64,10 +64,10 @@ final class ClientMessageTests: BaseZMClientMessageTests {
         }
     }
     
-    func assertThatItSetsLocallyModifiedKeys(whenLinkPreviewStateIsSet state: ZMLinkPreviewState, shouldSet: Bool) {
+    private func assertThatItSetsLocallyModifiedKeys(whenLinkPreviewStateIsSet state: ZMLinkPreviewState, shouldSet: Bool) {
         // given
         let message = createClientTextMessage()
-        XCTAssertFalse(((message?.keysThatHaveLocalModifications.contains(ZMClientMessage.linkPreviewStateKey)) != nil))
+        XCTAssert(false == message?.keysThatHaveLocalModifications.contains(ZMClientMessage.linkPreviewStateKey))
 
         // when
         message?.linkPreviewState = state
