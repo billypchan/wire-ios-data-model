@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2021 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ class GenericMessageTests: XCTestCase {
             { return GenericMessage(content: Location(latitude: 1, longitude: 2)) },
             { return GenericMessage(content: MessageDelete(messageId: UUID.create())) },
             { return GenericMessage(content: WireProtos.Reaction.createReaction(emoji: "test", messageID: UUID.create())) },
-            { return GenericMessage(content: Availability(.away)) }
+            { return GenericMessage(content: WireProtos.Availability(.away)) }
         ]
         
         generators.forEach { generator in
