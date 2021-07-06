@@ -1,5 +1,4 @@
 # Wire™
-
 [![Wire logo](https://github.com/wireapp/wire/blob/master/assets/header-small.png?raw=true)](https://wire.com/jobs/)
 
 [![Azure Pipelines Build Status](https://dev.azure.com/wireswiss/Wire%20iOS/_apis/build/status/Frameworks/wire-ios-data-model?branchName=develop)](https://dev.azure.com/wireswiss/Wire%20iOS/_build/latest?definitionId=28&branchName=develop) [![codecov](https://codecov.io/gh/wireapp/wire-ios-data-model/branch/develop/graph/badge.svg)](https://codecov.io/gh/wireapp/wire-ios-data-model)
